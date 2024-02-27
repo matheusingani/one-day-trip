@@ -10,9 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_27_121937) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_27_125428) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "expericences", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "place_id", null: false
+    t.integer "rating"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["place_id"], name: "index_expericences_on_place_id"
+    t.index ["user_id"], name: "index_expericences_on_user_id"
+  end
+
+  create_table "experiences", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "place_id", null: false
+    t.integer "rating"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["place_id"], name: "index_experiences_on_place_id"
+    t.index ["user_id"], name: "index_experiences_on_user_id"
+  end
 
   create_table "places", force: :cascade do |t|
     t.string "title"
@@ -37,5 +57,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_27_121937) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "expericences", "places"
+  add_foreign_key "expericences", "users"
+  add_foreign_key "experiences", "places"
+  add_foreign_key "experiences", "users"
   add_foreign_key "places", "users"
 end
