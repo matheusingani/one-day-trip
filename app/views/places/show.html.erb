@@ -11,13 +11,26 @@
 <p><strong>Address:</strong><%= @place.address %></p>
 <p><strong>Rating:</strong><%= "⭐" * @rating%></p>
 
+<% @experiences.each do |experience| %>
+  <div>
+    <p>Rating: <%= experience.rating %></p>
+  </div>
+<% end %>
+
+<h4>Rate this place:</h4>
+<%= form_with(model: [@place, @experience], url: create_experience_place_path(@place), local: true) do |form| %>
+  <div class="field my-2">
+    <%= form.label :rating %>
+    <%= form.number_field :rating, min: 1, max: 5 %>
+    <%= form.hidden_field :place_id, value: @place.id %>
+  </div>
+ <%= form.submit 'Submit Rating' %>
+<% end %>
 
 
 
 
-<div>
+<div class="mb-5">
   <%= link_to "Edit this place", edit_place_path(@place) %> |
   <%= link_to "Back to places", places_path %>
-
-  <%= button_to "Destroy this place", @place, method: :delete %>
 </div>

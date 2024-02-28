@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   resources :experiences
-  resources :places
+  resources :places do
+    post 'create_experience', on: :member
+  end
   devise_for :users
+
   root to: "pages#home"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
