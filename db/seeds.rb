@@ -7,3 +7,12 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+
+# t.string "title"
+# t.string "city"
+# t.string "address"
+# t.string "description"
+# t.bigint "user_id", null: false
+
+#Place.create(title: "Wonder Woman 1984", city: "", address: "",)
