@@ -8,6 +8,8 @@ class PlacesController < ApplicationController
 
   # GET /places/1 or /places/1.json
   def show
+    @place = Place.find(params[:id])
+    @experiences = @place.experiences
   end
 
   # GET /places/new
