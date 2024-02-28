@@ -11,6 +11,7 @@ class PlacesController < ApplicationController
     @place = Place.find(params[:id])
     @experience = @place.experiences.build
     @experiences = @place.experiences
+    @rating = rand(5)
   end
 
   def create_experience
@@ -80,7 +81,7 @@ class PlacesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def place_params
-      params.require(:place).permit(:title, :city, :address, :description, :user_id)
+      params.require(:place).permit(:title, :city, :address, :description, :user_id, :photo)
     end
 
     def experience_params
