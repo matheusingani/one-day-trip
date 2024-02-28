@@ -10,13 +10,13 @@
   </div>
 </form>
 
-<div style="width: 100%; height: 600px;"
+<div style="width: 100%; height:50vh;"
   data-controller="map"
   data-map-markers-value="<%= @markers.to_json %>"
   data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
 </div>
 
-<div class="cards">
+<div class="cards mb-5">
   <% @places.each do |city| %>
  <%= link_to city do %>
     <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('<%= cl_image_path city.photo.key %>')">
