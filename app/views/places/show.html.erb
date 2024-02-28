@@ -14,13 +14,12 @@
   </div>
 <% end %>
 
-<h2>Rate this place:</h2>
-<%= form_with(model: [@place, @experience], url: "/places/1/create_experience?place_id=1", local: true) do |form| %>
-  <div class="field">
+<h4>Rate this place:</h4>
+<%= form_with(model: [@place, @experience], url: create_experience_place_path(@place), local: true) do |form| %>
+  <div class="field my-2">
     <%= form.label :rating %>
     <%= form.number_field :rating, min: 1, max: 5 %>
-    <%= form.hidden_field :place_id, value: 1 %>
-
+    <%= form.hidden_field :place_id, value: @place.id %>
   </div>
  <%= form.submit 'Submit Rating' %>
 <% end %>
