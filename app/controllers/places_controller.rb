@@ -9,9 +9,21 @@ class PlacesController < ApplicationController
   # GET /places/1 or /places/1.json
   def show
     @place = Place.find(params[:id])
+    @experience = @place.experiences.build
     @experiences = @place.experiences
   end
 
+  def create_experience
+    puts "hello from experience", params
+    puts "Good bye"
+    @place = Place.find(params[:place_id])
+    @experience = @place.experiences.build(experience_params)
+    if @experience.save
+      redirect_to @place, notice: 'Rating was successfully submitted.'
+    else
+      render :show
+    end
+  end
   # GET /places/new
   def new
     @place = Place.new
@@ -68,5 +80,9 @@ class PlacesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def place_params
       params.require(:place).permit(:title, :city, :address, :description, :user_id)
+    end
+
+    def experience_params
+      params.require(:experience).permit(:rating, :comment)
     end
 end

@@ -13,6 +13,7 @@ class ExperiencesController < ApplicationController
   # GET /experiences/new
   def new
     @experience = Experience.new
+
   end
 
   # GET /experiences/1/edit
@@ -22,7 +23,8 @@ class ExperiencesController < ApplicationController
   # POST /experiences or /experiences.json
   def create
     @experience = Experience.new(experience_params)
-
+    @place = Place.find(params[:experience][:place_id])
+    @experience.user_id = current_user.id
     respond_to do |format|
       if @experience.save
         format.html { redirect_to experience_url(@experience), notice: "Experience was successfully created." }
