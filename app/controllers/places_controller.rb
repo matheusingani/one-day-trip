@@ -8,6 +8,7 @@ class PlacesController < ApplicationController
 
   # GET /places/1 or /places/1.json
   def show
+    @rating = rand(5)
   end
 
   # GET /places/new
@@ -65,6 +66,6 @@ class PlacesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def place_params
-      params.require(:place).permit(:title, :city, :address, :description, :user_id)
+      params.require(:place).permit(:title, :city, :address, :description, :user_id, :photo)
     end
 end
