@@ -19,7 +19,8 @@
 
 
 
-  <%= form_with(model: [@place, @experience], url: create_experience_place_path(@place), local: true) do |form| %>
+  <form action=<%=create_experience_place_path(@place)%> method="post">
+
     <div class="field my-2">
     <fieldset class="starability-basic">
 
@@ -35,12 +36,11 @@
   <input type="radio" id="first-rate5" name="rating" value="5" />
   <label for="first-rate5" title="Amazing">5 stars</label>
   </fieldset>
-      <%= form.label :rating %>
-      <%= form.number_field :rating, min: 1, max: 5 %>
-      <%= form.hidden_field :place_id, value: @place.id %>
+
+      <input type="hidden" name="place_id" value=<%= @place.id %>>
     </div>
-  <%= form.submit 'Submit Rating' %>
-  <% end %>
+  <input type="submit" value="Submit Rating" />
+</form>
 </div>
 
 

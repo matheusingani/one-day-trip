@@ -21,12 +21,14 @@ class PlacesController < ApplicationController
 
   def create_experience
     puts "\n\n\n\n\n\n@@@@@@@@@@\n\n\n\n\n"
-
-    @experience = Experience.new(experience_params)
+    puts params
+    @experience = Experience.new
+    @experience.rating = params[:rating]
+    @experience.place_id = params[:place_id]
     puts @experience.rating
     puts "\n\n\n\n\n\n@@@@@@@@@@\n\n\n\n\n"
     @experience.user_id = current_user.id
-    @place = Place.find(params[:experience][:place_id])
+    @place = Place.find(params[:place_id])
     if @experience.save
       redirect_to @place, notice: 'Rating was successfully submitted.'
     else
@@ -94,6 +96,6 @@ class PlacesController < ApplicationController
     end
 
     def experience_params
-      params.require(:experience).permit(:rating, :comment, :place_id)
+      params.permit(:rating, :comment, :place_id)
     end
 end
