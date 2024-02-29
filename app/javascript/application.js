@@ -3,3 +3,8 @@ import "@hotwired/turbo-rails"
 import "controllers"
 import "@popperjs/core"
 import "bootstrap"
+
+//= require rails-ujs
+//= require turbolinks
+//= require_tree .
+//= require star_rating

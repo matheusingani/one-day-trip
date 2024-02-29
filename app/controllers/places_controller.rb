@@ -11,12 +11,11 @@ class PlacesController < ApplicationController
     @place = Place.find(params[:id])
     @experience = @place.experiences.build
     @experiences = @place.experiences
+    @average_rating = @experiences.average(:rating)
     @rating = rand(5)
   end
 
   def create_experience
-    # @place = Place.find(params[:place_id])
-    # @experience = @place.experiences.build(experience_params)
     @experience = Experience.new(experience_params)
     @experience.user_id = current_user.id
     @place = Place.find(params[:experience][:place_id])
@@ -66,7 +65,7 @@ class PlacesController < ApplicationController
   # DELETE /places/1 or /places/1.json
   def destroy
     @place.destroy!
-
+    @experience.destroy!
     respond_to do |format|
       format.html { redirect_to places_url, notice: "Place was successfully destroyed." }
       format.json { head :no_content }
