@@ -2,8 +2,13 @@ class PlacesController < ApplicationController
   before_action :set_place, only: %i[ show edit update destroy ]
   before_action :authenticate_user!
   # GET /places or /places.json
+
+
+
+
   def index
     @places = Place.all
+    show_one_place_per_city
   end
 
   # GET /places/1 or /places/1.json
@@ -34,6 +39,8 @@ class PlacesController < ApplicationController
   # GET /places/1/edit
   def edit
   end
+
+
 
   # POST /places or /places.json
   def create
