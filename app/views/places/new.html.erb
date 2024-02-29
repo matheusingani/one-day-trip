@@ -7,22 +7,3 @@
 <div>
   <%= link_to "Back to places", places_path %>
 </div>
-
-<%= form_with(model: [@place, @experience], url: create_experience_place_path(@place), local: true) do |form| %>
-  <div class="field my-2">
-    <%= form.label :rating %>
-    <div class="starability-basic">
-      <fieldset>
-        <input type="radio" id="rating-1" name="rating" value="1">
-        <input type="radio" id="rating-2" name="rating" value="2">
-        <input type="radio" id="rating-3" name="rating" value="3">
-        <input type="radio" id="rating-4" name="rating" value="4">
-        <input type="radio" id="rating-5" name="rating" value="5">
-        <div class="starability-grow"></div>
-      </fieldset>
-    </div>
-    <%= form.hidden_field :rating, id: "rating-value" %>
-    <%= form.hidden_field :place_id, value: @place.id %>
-  </div>
-  <%= form.submit 'Submit Rating' %>
-<% end %>
