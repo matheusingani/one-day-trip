@@ -11,6 +11,14 @@ class PlacesController < ApplicationController
     show_one_place_per_city
   end
 
+  def show_one_place_per_city
+    allplaces = Place.all
+    #uniq { |obj| obj.name }.max_by { |obj| obj.rating }
+    @placepercity = allplaces.group_by { |place| place.city }
+    print "hiiiiii"
+    print @placepercity
+  end
+
   # GET /places/1 or /places/1.json
   def show
     @place = Place.find(params[:id])
