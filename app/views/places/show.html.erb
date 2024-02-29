@@ -6,16 +6,10 @@
 
 
 
-<h2 class = "mt-3"><%= @place.city %></h2>
+<h2 class="mt-3"><%= @place.city %></h2>
 <strong>Description:</strong><p><%= @place.description %></p>
 <p><strong>Address:</strong><%= @place.address %></p>
-<p><strong>Rating:</strong><%= "⭐" * @rating%></p>
-
-<% @experiences.each do |experience| %>
-  <div>
-    <p>Rating: <%= experience.rating %></p>
-  </div>
-<% end %>
+<p><strong>Overall Rating:</strong> <%= @average_rating.nil? ? "No ratings yet" : "%.2f" % @average_rating %><%= "⭐"* @average_rating.round %></p>
 
 <h4>Rate this place:</h4>
 <%= form_with(model: [@place, @experience], url: create_experience_place_path(@place), local: true) do |form| %>
