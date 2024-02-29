@@ -3,9 +3,6 @@ class PlacesController < ApplicationController
   before_action :authenticate_user!
   # GET /places or /places.json
 
-
-
-
   def index
     @places = Place.all
     show_one_place_per_city
@@ -13,6 +10,7 @@ class PlacesController < ApplicationController
 
   # GET /places/1 or /places/1.json
   def show
+    puts "@@@@"
     @place = Place.find(params[:id])
     @experience = @place.experiences.build
     @experiences = @place.experiences
@@ -20,8 +18,13 @@ class PlacesController < ApplicationController
     @rating = rand(5)
   end
 
+
   def create_experience
+    puts "\n\n\n\n\n\n@@@@@@@@@@\n\n\n\n\n"
+
     @experience = Experience.new(experience_params)
+    puts @experience.rating
+    puts "\n\n\n\n\n\n@@@@@@@@@@\n\n\n\n\n"
     @experience.user_id = current_user.id
     @place = Place.find(params[:experience][:place_id])
     if @experience.save

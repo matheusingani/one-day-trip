@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :experiences
   resources :places do
     post 'create_experience', on: :member
+    post 'rate', on: :member
   end
   devise_for :users
 
