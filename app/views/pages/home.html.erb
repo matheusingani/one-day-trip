@@ -18,10 +18,10 @@
 
 
 <div class="cards mb-5">
-  <% @placepercity.each do |city, places | %>
- <%= link_to places[0] do %>
-    <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('<%= cl_image_path places[0].photo.key %>')">
-      <%= places[0].city %>
+  <% @best_places.each do |city, places | %>
+ <%= link_to places do %>
+    <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('<%= cl_image_path places.photo.key %>')">
+      <%= places.city %>
     </div>
     <% end %>
   <% end %>
