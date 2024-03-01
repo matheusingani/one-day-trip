@@ -3,9 +3,6 @@ class PlacesController < ApplicationController
   before_action :authenticate_user!
   # GET /places or /places.json
 
-
-
-
   def index
     @places = Place.all
     show_one_place_per_city
@@ -28,10 +25,13 @@ class PlacesController < ApplicationController
     @rating = rand(5)
   end
 
+
   def create_experience
-    @experience = Experience.new(experience_params)
+    @experience = Experience.new
+    @experience.rating = params[:rating]
+    @experience.place_id = params[:place_id]
     @experience.user_id = current_user.id
-    @place = Place.find(params[:experience][:place_id])
+    @place = Place.find(params[:place_id])
     if @experience.save
       redirect_to @place, notice: 'Rating was successfully submitted.'
     else
@@ -99,6 +99,6 @@ class PlacesController < ApplicationController
     end
 
     def experience_params
-      params.require(:experience).permit(:rating, :comment, :place_id)
+      params.permit(:rating, :comment, :place_id)
     end
 end
