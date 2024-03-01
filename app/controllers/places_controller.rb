@@ -10,7 +10,6 @@ class PlacesController < ApplicationController
 
   # GET /places/1 or /places/1.json
   def show
-    puts "@@@@"
     @place = Place.find(params[:id])
     @experience = @place.experiences.build
     @experiences = @place.experiences
@@ -20,13 +19,9 @@ class PlacesController < ApplicationController
 
 
   def create_experience
-    puts "\n\n\n\n\n\n@@@@@@@@@@\n\n\n\n\n"
-    puts params
     @experience = Experience.new
     @experience.rating = params[:rating]
     @experience.place_id = params[:place_id]
-    puts @experience.rating
-    puts "\n\n\n\n\n\n@@@@@@@@@@\n\n\n\n\n"
     @experience.user_id = current_user.id
     @place = Place.find(params[:place_id])
     if @experience.save

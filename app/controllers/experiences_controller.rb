@@ -22,7 +22,6 @@ class ExperiencesController < ApplicationController
 
   # POST /experiences or /experiences.json
   def create
-    puts "@@@@@@"
     @experience = Experience.new(experience_params)
     @place = Place.find(params[:experience][:place_id])
     @experience.user_id = current_user.id
