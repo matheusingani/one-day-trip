@@ -5,7 +5,6 @@ class PlacesController < ApplicationController
 
   def index
     @places = Place.all
-    show_one_place_per_city
   end
 
   # GET /places/1 or /places/1.json
