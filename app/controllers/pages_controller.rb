@@ -28,7 +28,7 @@ class PagesController < ApplicationController
                           hash = {rating: overall_ratings.sum(0.0) / overall_ratings.size,
                             place: experiences[0],
                             visited: experiences.any? { |experience|
-                              experience.experience_id == current_user.id }}
+                              user_signed_in? ? experience.experience_id == current_user.id : false}}
                             hash
                           }
                         .filter { |key, value| !value[:visited] }
