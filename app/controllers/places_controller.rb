@@ -4,10 +4,8 @@ class PlacesController < ApplicationController
   # GET /places or /places.json
 
 
-
-
   def index
-    @places = Place.all
+    @places = policy_scope(Place)
     show_one_place_per_city
   end
 
@@ -15,13 +13,13 @@ class PlacesController < ApplicationController
     allplaces = Place.all
     #uniq { |obj| obj.name }.max_by { |obj| obj.rating }
     @placepercity = allplaces.group_by { |place| place.city }
-    print "hiiiiii"
     print @placepercity
   end
 
   # GET /places/1 or /places/1.json
   def show
     @place = Place.find(params[:id])
+    authorize @place
     @experience = @place.experiences.build
     @experiences = @place.experiences
     @average_rating = @experiences.average(:rating)
@@ -45,6 +43,7 @@ class PlacesController < ApplicationController
 
   # GET /places/1/edit
   def edit
+
   end
 
 
@@ -95,7 +94,7 @@ class PlacesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def place_params
-      params.require(:place).permit(:title, :city, :address, :description, :user_id, :photo)
+      params.require(:place).permit(:title, :city, :address, :description, :photo)
     end
 
     def experience_params
