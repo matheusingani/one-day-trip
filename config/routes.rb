@@ -4,6 +4,10 @@ Rails.application.routes.draw do
     post 'create_experience', on: :member
     post 'rate', on: :member
   end
+
+  get "/:city", to: "places#city"
+
+
   devise_for :users
 
   root to: "pages#home"
