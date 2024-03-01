@@ -1,4 +1,4 @@
-class PlacePolicy < ApplicationPolicy
+class ExperiencePolicy < ApplicationPolicy
   class Scope < Scope
     # NOTE: Be explicit about which records you allow access to!
     def resolve
@@ -7,6 +7,10 @@ class PlacePolicy < ApplicationPolicy
   end
 
   def show?
+    true
+  end
+
+  def create_experience?
     true
   end
 
@@ -21,4 +25,5 @@ class PlacePolicy < ApplicationPolicy
   def destroy?
     record.user == user
   end
+
 end

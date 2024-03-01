@@ -3,7 +3,6 @@ class PlacesController < ApplicationController
   before_action :authenticate_user!
   # GET /places or /places.json
 
-
   def index
     @places = policy_scope(Place)
     show_one_place_per_city
@@ -19,7 +18,6 @@ class PlacesController < ApplicationController
   # GET /places/1 or /places/1.json
   def show
     @place = Place.find(params[:id])
-    authorize @place
     @experience = @place.experiences.build
     @experiences = @place.experiences
     @average_rating = @experiences.average(:rating)
@@ -29,6 +27,7 @@ class PlacesController < ApplicationController
   def create_experience
     @experience = Experience.new(experience_params)
     @experience.user_id = current_user.id
+    authorize @experience
     @place = Place.find(params[:experience][:place_id])
     if @experience.save
       redirect_to @place, notice: 'Rating was successfully submitted.'
@@ -39,19 +38,18 @@ class PlacesController < ApplicationController
   # GET /places/new
   def new
     @place = Place.new
+    authorize @place
   end
 
   # GET /places/1/edit
   def edit
-
   end
-
-
 
   # POST /places or /places.json
   def create
     @place = Place.new(place_params)
     @place.user_id = current_user.id
+    authorize @place
     respond_to do |format|
       if @place.save
         format.html { redirect_to place_url(@place), notice: "Place was successfully created." }
@@ -79,7 +77,6 @@ class PlacesController < ApplicationController
   # DELETE /places/1 or /places/1.json
   def destroy
     @place.destroy!
-    @experience.destroy!
     respond_to do |format|
       format.html { redirect_to places_url, notice: "Place was successfully destroyed." }
       format.json { head :no_content }
@@ -90,6 +87,7 @@ class PlacesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_place
       @place = Place.find(params[:id])
+      authorize @place
     end
 
     # Only allow a list of trusted parameters through.
