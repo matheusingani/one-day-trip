@@ -25,7 +25,6 @@ class PagesController < ApplicationController
                           hash = {rating: overall_ratings.sum(0.0) / overall_ratings.size,
                             place: experiences[0],
                             visited: experiences.any? { |experience|
-                              puts [experience.experience_id, current_user.id]
                               experience.experience_id == current_user.id }}
                             hash
                           }
