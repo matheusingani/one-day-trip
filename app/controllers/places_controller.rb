@@ -8,33 +8,6 @@ class PlacesController < ApplicationController
     show_one_place_per_city
   end
 
-  def show_one_place_per_city
-    @best_places =  Place
-                    .all
-                    .left_outer_joins(:experiences)
-                    .select("city,rating,places.id")
-                    .group_by{ |place| place.city }
-                    .transform_values{ |places_per_city| places_per_city
-                      .group_by { |experience| experience.id }
-                      .transform_values { |experiences|
-                        ratings = experiences.map { |experience|
-                          experience.rating || 0
-                        }
-                        ratings.sum(0.0) / ratings.size
-                      }
-                      .max_by { |key, value|  value }[0]
-                    }
-
-#{"Lisbon"=>{14=>3.5, 15=>1.0}, "London"=>{16=>0.0}}
-#{"Lisbon"=>14, "London"=>16}
-
-    puts "********"
-    p @best_places
-    puts "******** ******** "
-    # combine the two tables
-
-  end
-
   # GET /places/1 or /places/1.json
   def show
     @place = Place.find(params[:id])
@@ -52,7 +25,7 @@ class PlacesController < ApplicationController
     @experience.user_id = current_user.id
     @place = Place.find(params[:place_id])
     if @experience.save
-      redirect_to @place, notice: 'Rating was successfully submitted.'
+      redirect_to "/", notice: 'Rating was successfully submitted.'
     else
       render :show
     end
@@ -106,9 +79,6 @@ class PlacesController < ApplicationController
     end
   end
 
-  def city
-
-  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

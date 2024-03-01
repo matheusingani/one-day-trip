@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     post 'rate', on: :member
   end
 
-  get "/:city", to: "places#city"
+  get "/:city", to: "places#city", as: "city"
 
 
   devise_for :users

@@ -9,10 +9,37 @@ class PagesController < ApplicationController
     end
 
     def show_one_place_per_city
-      allplaces = Place.all
-      #uniq { |obj| obj.name }.max_by { |obj| obj.rating }
-      @placepercity = allplaces.group_by { |place| place.city }
+      @best_places =  Place
+                      .all
+                      .left_outer_joins(:experiences)
+                      .select("rating,places.*")
+                      .group_by{ |place| place.city }
+                      .transform_values{ |places_per_city| places_per_city
+                        .group_by { |experience| experience.id }
+                        .transform_values { |experiences|
+                          overall_ratings = experiences.map { |experience|
+                            experience.rating || 0
+                          }
+                          [overall_ratings.sum(0.0) / overall_ratings.size, experiences[0]]
+                        }
+                        .max_by { |key, value|  value }[1][1]
+                      }
+
+                      #{"Lisbon"=>{14=>3.5, 15=>1.0}, "London"=>{16=>0.0}}
+                      #{"Lisbon"=>14, "London"=>16}
+
+                      puts "WWWWWWWWWWWW"
+                      p @best_places
+                      puts "******** ******** "
+                      # combine the two tables
+
     end
+
+    # def show_one_place_per_city
+    #   allplaces = Place.all
+    #   #uniq { |obj| obj.name }.max_by { |obj| obj.rating }
+    #   @placepercity = allplaces.group_by { |place| place.city }
+    # end
 
     show_one_place_per_city
 
