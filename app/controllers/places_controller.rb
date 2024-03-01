@@ -1,5 +1,5 @@
 class PlacesController < ApplicationController
-  before_action :set_place, only: %i[ show edit update destroy ]
+  before_action :set_place, only: %i[ index show edit update destroy ]
   before_action :authenticate_user!
   # GET /places or /places.json
 
@@ -9,6 +9,7 @@ class PlacesController < ApplicationController
   end
 
   def show_one_place_per_city
+    authorize @place
     allplaces = Place.all
     #uniq { |obj| obj.name }.max_by { |obj| obj.rating }
     @placepercity = allplaces.group_by { |place| place.city }

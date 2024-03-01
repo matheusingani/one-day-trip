@@ -16,7 +16,5 @@ class PagesController < ApplicationController
     end
 
     show_one_place_per_city
-
-
   end
 end
