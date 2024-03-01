@@ -1,4 +1,7 @@
 class PagesController < ApplicationController
+  def index
+  end
+
   def home
     @places = Place.all
     @markers = @places.geocoded.map do |place|
@@ -54,6 +57,5 @@ class PagesController < ApplicationController
       @movies = @movies.joins(:director).where(sql, query: "%#{params[:query]}%")
       end
     end
-
   end
 end

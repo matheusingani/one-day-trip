@@ -41,9 +41,10 @@
 </form>
 </div>
 
-
-
-<div class="my-5">
-  <%= link_to "Edit this place", edit_place_path(@place) %> |
+<div class="mb-5">
+  <% if @place.user == current_user %>
+    <%= link_to "Edit", edit_place_path(@place) %>
+    <%= button_to "Destroy", @place, method: :delete if policy(@place).destroy? %>
+  <% end %>
   <%= link_to "Back to places", places_path %>
 </div>
