@@ -12,45 +12,35 @@ class PagesController < ApplicationController
       @best_places =  Place
                       .all
                       .left_outer_joins(:experiences)
-                      .select("rating,places.*")
+                      .select("rating,places.*,experiences.user_id as experience_id")
                       .group_by{ |place| place.city }
-                      .transform_values{ |places_per_city| places_per_city
+                      .transform_values{ |places_per_city|
+                        places = places_per_city
                         .group_by { |experience| experience.id }
                         .transform_values { |experiences|
                           overall_ratings = experiences.map { |experience|
                             experience.rating || 0
                           }
-                          [overall_ratings.sum(0.0) / overall_ratings.size, experiences[0]]
-                        }
-                        .max_by { |key, value|  value }[1][1]
+                          hash = {rating: overall_ratings.sum(0.0) / overall_ratings.size,
+                            place: experiences[0],
+                            visited: experiences.any? { |experience|
+                              puts [experience.experience_id, current_user.id]
+                              experience.experience_id == current_user.id }}
+                            hash
+                          }
+                        .filter { |key, value| !value[:visited] }
+                        if places != {}
+                          places.max_by { |key, value|  value[:rating] }[1][:place]
+                        else
+                          nil
+                        end
                       }
+                      .filter {|city, place| place != nil }
 
-                      #{"Lisbon"=>{14=>3.5, 15=>1.0}, "London"=>{16=>0.0}}
-                      #{"Lisbon"=>14, "London"=>16}
-
-                      puts "WWWWWWWWWWWW"
-                      p @best_places
-                      puts "******** ******** "
-                      # combine the two tables
 
     end
 
-    # def show_one_place_per_city
-    #   allplaces = Place.all
-    #   #uniq { |obj| obj.name }.max_by { |obj| obj.rating }
-    #   @placepercity = allplaces.group_by { |place| place.city }
-    # end
-
     show_one_place_per_city
-
-    # get rating with place_id from experience table
-    # sort it places array according to that ratings average
-    # display only the first one
-
-#     SELECT date_trunc('month', purchased_at)::date, SUM(orders_with_amount.amount)
-# FROM orders
-# JOIN orders_with_amount ON orders.id = orders_with_amount.order_id
-# GROUP BY 1
 
     def show_best_rated_place
       @places = Place.all
