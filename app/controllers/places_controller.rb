@@ -15,34 +15,27 @@ class PlacesController < ApplicationController
     @best_places =  Place
                     .all
                     .left_outer_joins(:experiences)
-                    .select("city,rating,place_id")
+                    .select("city,rating,places.id")
                     .group_by{ |place| place.city }
                     .transform_values{ |places_per_city| places_per_city
-                      .group_by { |experience| experience.place_id } }
+                      .group_by { |experience| experience.id }
+                      .transform_values { |experiences|
+                        ratings = experiences.map { |experience|
+                          experience.rating || 0
+                        }
+                        ratings.sum(0.0) / ratings.size
+                      }
+                      .max_by { |key, value|  value }[0]
+                    }
 
-
-
-
-                    #.transform_values{ | rating_per_experience |  rating_per_experience }
-
-                    # a.sum(0.0) / a.size
-
-
-                    # .map{ |place| [place.city, place.title, place.rating] }
+#{"Lisbon"=>{14=>3.5, 15=>1.0}, "London"=>{16=>0.0}}
+#{"Lisbon"=>14, "London"=>16}
 
     puts "********"
     p @best_places
     puts "******** ******** "
     # combine the two tables
 
-    # group by city
-    # group experiences per place
-    # calculate avg rating per place
-    # sort it places array according to that avg rating
-    # display only the first one
-
-    #@placepercity = @places.group_by { |place| place.city }
-    #print @placepercity
   end
 
   # GET /places/1 or /places/1.json
