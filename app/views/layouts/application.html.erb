@@ -10,20 +10,20 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/starability/starability-all.min.css">
+    <%= stylesheet_link_tag "starability-all.min" %>
 
-    <script src="https://cdn.jsdelivr.net/npm/starability/starability-all.min.js"></script>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
     <%= javascript_importmap_tags %>
   </head>
 
+
   <body>
-  <span class=”glyphicon glyphicon-star”></span>
   <%= render "shared/navbar" %>
   <%= render "shared/flashes" %>
   <div class="container">
     <%= yield %>
-    </div>
+  </div>
   </body>
 </html>

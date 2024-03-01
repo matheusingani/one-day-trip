@@ -5,15 +5,6 @@ class PlacesController < ApplicationController
 
   def index
     @places = policy_scope(Place)
-    show_one_place_per_city
-  end
-
-  def show_one_place_per_city
-    authorize @place
-    allplaces = Place.all
-    #uniq { |obj| obj.name }.max_by { |obj| obj.rating }
-    @placepercity = allplaces.group_by { |place| place.city }
-    print @placepercity
   end
 
   # GET /places/1 or /places/1.json
@@ -25,13 +16,16 @@ class PlacesController < ApplicationController
     @rating = rand(5)
   end
 
+
   def create_experience
-    @experience = Experience.new(experience_params)
+    @experience = Experience.new
+    @experience.rating = params[:rating]
+    @experience.place_id = params[:place_id]
     @experience.user_id = current_user.id
     authorize @experience
-    @place = Place.find(params[:experience][:place_id])
+    @place = Place.find(params[:place_id])
     if @experience.save
-      redirect_to @place, notice: 'Rating was successfully submitted.'
+      redirect_to "/", notice: 'Rating was successfully submitted.'
     else
       render :show
     end
@@ -84,6 +78,7 @@ class PlacesController < ApplicationController
     end
   end
 
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_place
@@ -97,6 +92,6 @@ class PlacesController < ApplicationController
     end
 
     def experience_params
-      params.require(:experience).permit(:rating, :comment, :place_id)
+      params.permit(:rating, :comment, :place_id)
     end
 end

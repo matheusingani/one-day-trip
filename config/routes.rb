@@ -2,7 +2,12 @@ Rails.application.routes.draw do
   resources :experiences
   resources :places do
     post 'create_experience', on: :member
+    post 'rate', on: :member
   end
+
+  get "/:city", to: "places#city", as: "city"
+
+
   devise_for :users
 
   root to: "pages#home"
