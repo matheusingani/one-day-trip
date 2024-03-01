@@ -6,10 +6,6 @@ class PlacePolicy < ApplicationPolicy
     end
   end
 
-  def show_one_place_per_city?
-    true
-  end
-
   def index?
     true
   end

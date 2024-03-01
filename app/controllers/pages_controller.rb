@@ -1,4 +1,7 @@
 class PagesController < ApplicationController
+  def index
+  end
+
   def home
     @places = Place.all
     @markers = @places.geocoded.map do |place|
