@@ -6,6 +6,10 @@ class PlacePolicy < ApplicationPolicy
     end
   end
 
+  def home?
+    true
+  end
+
   def index?
     true
   end

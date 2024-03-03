@@ -4,7 +4,8 @@ class PlacesController < ApplicationController
   # GET /places or /places.json
 
   def index
-    @places = policy_scope(Place)
+    authorize @place
+    @places = Place.all
   end
 
   # GET /places/1 or /places/1.json
